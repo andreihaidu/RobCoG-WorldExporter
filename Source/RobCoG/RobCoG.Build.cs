@@ -14,8 +14,6 @@ public class RobCoG : ModuleRules
 			"CoreUObject", 
 			"Engine", 
 			"InputCore",
-			"UPIDController",
-            "SemLog",
             "UTags"
 			});
 

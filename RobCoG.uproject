@@ -15,7 +15,7 @@
 	],
 	"Plugins": [
 		{
-			"Name": "USemLog",
+			"Name": "UUtils",
 			"Enabled": true,
 			"MarketplaceURL": "http://robcog.org/"
 		}

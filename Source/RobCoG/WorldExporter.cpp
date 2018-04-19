@@ -1,7 +1,7 @@
 // Copyright 2017, Institute for Artificial Intelligence - University of Bremen
 
 #include "WorldExporter.h"
-#include "TagStatics.h"
+#include "Tags.h"
 #include "HAL/PlatformFilemanager.h"
 #include "Paths.h"
 #include "Engine/StaticMeshActor.h"
@@ -21,8 +21,8 @@ void AWorldExporter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	TMap<UObject*, FString> ObjToClass = FTagStatics::GetObjectsToKeyValue(GetWorld(), TEXT("SemLog"), TEXT("Class"));
-	TMap<UObject*, FString> ObjToId = FTagStatics::GetObjectsToKeyValue(GetWorld(), TEXT("SemLog"), TEXT("Id"));
+	TMap<UObject*, FString> ObjToClass = FTags::GetObjectsToKeyValue(GetWorld(), TEXT("SemLog"), TEXT("Class"));
+	TMap<UObject*, FString> ObjToId = FTags::GetObjectsToKeyValue(GetWorld(), TEXT("SemLog"), TEXT("Id"));
 
 	IPlatformFile& PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
 
