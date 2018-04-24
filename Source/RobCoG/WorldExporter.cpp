@@ -217,8 +217,8 @@ void AWorldExporter::BeginPlay()
 		Indent.RemoveFromEnd(TEXT("  "));
 		Text.Append(Indent + TEXT("]\n"));
 		Text.Append(TEXT("\n---"));
-		
-		FString AbsFilePath = ExportDir + TEXT("World_") + FIds::NewGuidInBase64() + TEXT(".yaml");
+
+		FString AbsFilePath = ExportDir + TEXT("World_") + FIds::NewGuidInBase64Url() + TEXT(".yaml");
 		FFileHelper::SaveStringToFile(Text, *AbsFilePath);
 	}
 }
