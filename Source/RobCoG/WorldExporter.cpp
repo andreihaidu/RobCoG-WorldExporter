@@ -72,14 +72,14 @@ void AWorldExporter::BeginPlay()
 					if (ObjToId.Contains(AttachedParent) && ObjToClass.Contains(AttachedParent))
 					{
 						Text.Append(Indent + TEXT("ParentClass: " + ObjToClass[AttachedParent] + ",\n"));
-						Text.Append(Indent + TEXT("ParentId: " + ObjToId[AttachedParent] + ",\n"));
-						FTransform RelativeTransform = FConversions::UToROS(
-							ObjAsActor->GetTransform().GetRelativeTransform(AttachedParent->GetTransform()));
-						FVector RelLoc = RelativeTransform.GetLocation(); // ToMeters
-						FQuat RelQuat = RelativeTransform.GetRotation();
-						FString RelativePose = FString::Printf(TEXT("[%f,%f,%f,%f,%f,%f,%f]"), RelLoc.X, RelLoc.Y, RelLoc.Z,
-							RelQuat.W, RelQuat.X, RelQuat.Y, RelQuat.Z);
-						Text.Append(Indent + TEXT("RelativePose: " + RelativePose + ",\n"));
+						Text.Append(Indent + TEXT("ParentId: \"" + ObjToId[AttachedParent] + "\",\n"));
+						//FTransform RelativeTransform = FConversions::UToROS(
+						//	ObjAsActor->GetTransform().GetRelativeTransform(AttachedParent->GetTransform()));
+						//FVector RelLoc = RelativeTransform.GetLocation(); // ToMeters
+						//FQuat RelQuat = RelativeTransform.GetRotation();
+						//FString RelativePose = FString::Printf(TEXT("[%f,%f,%f,%f,%f,%f,%f]"), RelLoc.X, RelLoc.Y, RelLoc.Z,
+						//	RelQuat.W, RelQuat.X, RelQuat.Y, RelQuat.Z);
+						//Text.Append(Indent + TEXT("RelativePose: " + RelativePose + ",\n"));
 					}
 				}
 			}
@@ -109,13 +109,13 @@ void AWorldExporter::BeginPlay()
 					{
 						Text.Append(Indent + TEXT("ParentClass: " + ObjToClass[AttachmentRootActor] + ",\n"));
 						Text.Append(Indent + TEXT("ParentId: \"" + ObjToId[AttachmentRootActor] + "\",\n"));						
-						FTransform RelativeTransform = FConversions::UToROS(
-							ObjAsComp->GetComponentTransform().GetRelativeTransform(AttachmentRootActor->GetTransform()));
-						FVector RelLoc = RelativeTransform.GetLocation();
-						FQuat RelQuat = RelativeTransform.GetRotation();
-						FString RelativePose = FString::Printf(TEXT("[%f,%f,%f,%f,%f,%f,%f]"), RelLoc.X, RelLoc.Y, RelLoc.Z,
-							RelQuat.W, RelQuat.X, RelQuat.Y, RelQuat.Z);
-						Text.Append(Indent + TEXT("RelativePose: " + RelativePose + ",\n"));
+						//FTransform RelativeTransform = FConversions::UToROS(
+						//	ObjAsComp->GetComponentTransform().GetRelativeTransform(AttachmentRootActor->GetTransform()));
+						//FVector RelLoc = RelativeTransform.GetLocation();
+						//FQuat RelQuat = RelativeTransform.GetRotation();
+						//FString RelativePose = FString::Printf(TEXT("[%f,%f,%f,%f,%f,%f,%f]"), RelLoc.X, RelLoc.Y, RelLoc.Z,
+						//	RelQuat.W, RelQuat.X, RelQuat.Y, RelQuat.Z);
+						//Text.Append(Indent + TEXT("RelativePose: " + RelativePose + ",\n"));
 					}
 				}
 			}
@@ -135,11 +135,11 @@ void AWorldExporter::BeginPlay()
 				Text.Append(Indent + "{\n");
 				Indent = Indent.Append(TEXT("  "));
 
-				Text.Append(Indent + TEXT("NameId: \"Joint-" + ObjToId[ConstrComp->ConstraintActor1] + TEXT("-")
-					+ ObjToId[ConstrComp->ConstraintActor2] +  TEXT("\",\n")));
+				Text.Append(Indent + TEXT("JointIds: [\"" + ObjToId[ConstrComp->ConstraintActor1] + TEXT(",\"")
+					+ ObjToId[ConstrComp->ConstraintActor2] +  TEXT("\"],\n")));
 
-				Text.Append(Indent + TEXT("NameClass: \"Joint-" + ObjToClass[ConstrComp->ConstraintActor1] + TEXT("-")
-					+ ObjToClass[ConstrComp->ConstraintActor2] + TEXT("\",\n")));
+				Text.Append(Indent + TEXT("JointClasses: [\"" + ObjToClass[ConstrComp->ConstraintActor1] + TEXT(",\"")
+					+ ObjToClass[ConstrComp->ConstraintActor2] + TEXT("\"],\n")));
 
 				FVector Loc = FConversions::UToROS(ConstrActItr->GetActorLocation());
 				FQuat Quat = FConversions::UToROS(ConstrActItr->GetActorQuat());
@@ -147,12 +147,13 @@ void AWorldExporter::BeginPlay()
 					Quat.W, Quat.X, Quat.Y, Quat.Z);
 				Text.Append(Indent + TEXT("Pose: " + Pose + ",\n"));
 
-				FTransform RelativeTransform = ConstrActItr->GetTransform().GetRelativeTransform(ConstrComp->ConstraintActor1->GetTransform());
-				FVector RelLoc = FConversions::UToROS(RelativeTransform.GetLocation());
-				FQuat RelQuat = FConversions::UToROS(RelativeTransform.GetRotation());
-				FString RelativePose = FString::Printf(TEXT("[%f,%f,%f,%f,%f,%f,%f]"), RelLoc.X, RelLoc.Y, RelLoc.Z,
-					RelQuat.W, RelQuat.X, RelQuat.Y, RelQuat.Z);
-				Text.Append(Indent + TEXT("RelativePose: " + RelativePose + ",\n"));
+				//FTransform RelativeTransform = ConstrActItr->GetTransform().GetRelativeTransform(ConstrComp->ConstraintActor1->GetTransform());
+				//FVector RelLoc = FConversions::UToROS(RelativeTransform.GetLocation());
+				//FQuat RelQuat = FConversions::UToROS(RelativeTransform.GetRotation());
+				//FString RelativePose = FString::Printf(TEXT("[%f,%f,%f,%f,%f,%f,%f]"), RelLoc.X, RelLoc.Y, RelLoc.Z,
+				//	RelQuat.W, RelQuat.X, RelQuat.Y, RelQuat.Z);
+				//Text.Append(Indent + TEXT("RelativePose: " + RelativePose + ",\n"));
+
 
 				// Check constraint type
 				if (ConstrComp->ConstraintInstance.GetLinearXMotion() != ELinearConstraintMotion::LCM_Locked ||
@@ -166,40 +167,43 @@ void AWorldExporter::BeginPlay()
 					{
 						Text.Append(Indent + TEXT("Type: \"Prismatic\",\n"));
 						Text.Append(Indent + TEXT("Axis: [1 0 0],\n"));
-						Text.Append(Indent + TEXT("Limit: " + FString::SanitizeFloat(FConversions::CmToM(ConstrComp->ConstraintInstance.GetLinearLimit())) + ",\n"));
+						Text.Append(Indent + TEXT("Limit: [0," + 
+							FString::SanitizeFloat(FConversions::CmToM(ConstrComp->ConstraintInstance.GetLinearLimit())) + "],\n"));
 					}
 					else if (ConstrComp->ConstraintInstance.GetLinearYMotion() != ELinearConstraintMotion::LCM_Locked)
 					{
 						Text.Append(Indent + TEXT("Type: \"Prismatic\",\n"));
 						Text.Append(Indent + TEXT("Axis: [0 1 0],\n"));
-						Text.Append(Indent + TEXT("Limit: " + FString::SanitizeFloat(FConversions::CmToM(ConstrComp->ConstraintInstance.GetLinearLimit())) + ",\n"));
+						Text.Append(Indent + TEXT("Limit: [0," + 
+							FString::SanitizeFloat(FConversions::CmToM(ConstrComp->ConstraintInstance.GetLinearLimit())) + "],\n"));
 					}
 					else if (ConstrComp->ConstraintInstance.GetLinearZMotion() != ELinearConstraintMotion::LCM_Locked)
 					{
 						Text.Append(Indent + TEXT("Type: \"Prismatic\",\n"));
 						Text.Append(Indent + TEXT("Axis: [0 0 1],\n"));
-						Text.Append(Indent + TEXT("Limit: " + FString::SanitizeFloat(FConversions::CmToM(ConstrComp->ConstraintInstance.GetLinearLimit())) + ",\n"));
+						Text.Append(Indent + TEXT("Limit: [0," + 
+							FString::SanitizeFloat(FConversions::CmToM(ConstrComp->ConstraintInstance.GetLinearLimit())) + "],\n"));
 					}
-					else if (ConstrComp->ConstraintInstance.GetAngularSwing1Limit() != ELinearConstraintMotion::LCM_Locked)
+					else if (ConstrComp->ConstraintInstance.GetAngularSwing1Motion() != EAngularConstraintMotion::ACM_Locked)
 					{
 						Text.Append(Indent + TEXT("Type: \"Revolute\",\n"));
 						Text.Append(Indent + TEXT("Axis: [0 0 1],\n"));
-						Text.Append(Indent + TEXT("Limit: " + 
-							FString::SanitizeFloat(FMath::DegreesToRadians(ConstrComp->ConstraintInstance.GetAngularSwing1Limit())) + ",\n"));
+						Text.Append(Indent + TEXT("Limit: [0," + 
+							FString::SanitizeFloat(FMath::DegreesToRadians(ConstrComp->ConstraintInstance.GetAngularSwing1Limit() * 2.f)) + "],\n"));
 					}
-					else if (ConstrComp->ConstraintInstance.GetAngularSwing2Limit() != ELinearConstraintMotion::LCM_Locked)
+					else if (ConstrComp->ConstraintInstance.GetAngularSwing2Motion() != EAngularConstraintMotion::ACM_Locked)
 					{
 						Text.Append(Indent + TEXT("Type: \"Revolute\",\n"));
 						Text.Append(Indent + TEXT("Axis: [0 1 0],\n"));
-						Text.Append(Indent + TEXT("Limit: " +
-							FString::SanitizeFloat(FMath::DegreesToRadians(ConstrComp->ConstraintInstance.GetAngularSwing2Limit())) + ",\n"));
+						Text.Append(Indent + TEXT("Limit: [0," +
+							FString::SanitizeFloat(FMath::DegreesToRadians(ConstrComp->ConstraintInstance.GetAngularSwing2Limit() * 2.f)) + "],\n"));
 					}
-					else if (ConstrComp->ConstraintInstance.GetAngularTwistMotion() != ELinearConstraintMotion::LCM_Locked)
+					else if (ConstrComp->ConstraintInstance.GetAngularTwistMotion() != EAngularConstraintMotion::ACM_Locked)
 					{
 						Text.Append(Indent + TEXT("Type: \"Revolute\",\n"));
 						Text.Append(Indent + TEXT("Axis: [1 0 0],\n"));
-						Text.Append(Indent + TEXT("Limit: " +
-							FString::SanitizeFloat(FMath::DegreesToRadians(ConstrComp->ConstraintInstance.GetAngularTwistLimit())) + ",\n"));
+						Text.Append(Indent + TEXT("Limit: [0," +
+							FString::SanitizeFloat(FMath::DegreesToRadians(ConstrComp->ConstraintInstance.GetAngularTwistLimit() * 2.f)) + "],\n"));
 					}
 				}
 				else
