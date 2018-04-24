@@ -16,8 +16,7 @@
 	"Plugins": [
 		{
 			"Name": "UUtils",
-			"Enabled": true,
-			"MarketplaceURL": "http://robcog.org/"
+			"Enabled": true
 		}
 	]
 }

@@ -14,7 +14,9 @@ public class RobCoG : ModuleRules
 			"CoreUObject", 
 			"Engine", 
 			"InputCore",
-            "UTags"
+            "UTags",
+			"UIds",
+			"UConversions",
 			});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {
